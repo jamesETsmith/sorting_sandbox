@@ -4,7 +4,7 @@ project (sorting_sandbox LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20) 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-
+set(CMAKE_BUILD_TYPE RELEASE)
 
 # Special compile flags (i.e. optimizations) for release builds
 execute_process(COMMAND cat /sys/devices/cpu/caps/pmu_name OUTPUT_VARIABLE ARCH OUTPUT_STRIP_TRAILING_WHITESPACE)
@@ -38,3 +38,15 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 
 enable_testing()
 add_subdirectory(src/test)
+
+
+#
+# Adding benchmarks
+#
+
+# Make sure CMake see benchmark
+add_subdirectory(${CMAKE_SOURCE_DIR}/external/googletest)
+add_subdirectory(${CMAKE_SOURCE_DIR}/external/benchmark)
+
+# Add configure our benchmarks
+add_subdirectory(${CMAKE_SOURCE_DIR}/benchmarking)
