@@ -15,6 +15,7 @@ else()
     message(STATUS "Using the compiler optimizations for march=${ARCH}")
 endif()
 
+# set(CMAKE_CXX_FLAGS "-O3 -g -march=${ARCH} -Wno-narrowing -stdlib=libc++")
 set(CMAKE_CXX_FLAGS "-O3 -g -march=${ARCH} -Wno-narrowing")
 
 
@@ -30,23 +31,33 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 find_package(OpenMP)
 
+include_directories(${CMAKE_SOURCE_DIR}/include)
+
 #
 # Source and Building
 #
 
-include_directories(${CMAKE_SOURCE_DIR}/include)
 
 enable_testing()
 add_subdirectory(src/test)
-
 
 #
 # Adding benchmarks
 #
 
 # Make sure CMake see benchmark
-add_subdirectory(${CMAKE_SOURCE_DIR}/external/googletest)
-add_subdirectory(${CMAKE_SOURCE_DIR}/external/benchmark)
+
+# add_subdirectory(${CMAKE_SOURCE_DIR}/external/googletest)
+# add_subdirectory(${CMAKE_SOURCE_DIR}/external/benchmark)
+
 
 # Add configure our benchmarks
-add_subdirectory(${CMAKE_SOURCE_DIR}/benchmarking)
+# add_subdirectory(${CMAKE_SOURCE_DIR}/benchmarking)
+
+
+
+#
+# Adding Profiling Kernels
+#
+
+add_subdirectory(profiling)

@@ -1,9 +1,9 @@
 #include <benchmark/benchmark.h>
 
 #include <random>
-#include <sorting_sandbox/ska_sort.hpp>
+#include <sorting_sandbox/mergesort.hpp>
 
-#define N_ELEMENTS 1000000000
+#define N_ELEMENTS 100000000
 
 /**
  * @brief A helper class for some of the sorting utilities to reduce cache
@@ -11,7 +11,7 @@
  *
  */
 class valuePair {
- public:
+public:
   size_t idx;
   double value;
   // Default construction necessary to use with stl containers
@@ -45,7 +45,7 @@ auto randomNumberBetween = [](int low, int high) {
 //
 //
 //
-static void BM_std_sort_int(benchmark::State& state) {
+static void BM_std_sort(benchmark::State &state) {
   for (auto _ : state) {
     state.PauseTiming();
 
@@ -58,13 +58,12 @@ static void BM_std_sort_int(benchmark::State& state) {
     std::ranges::sort(numbers.begin(), numbers.end());
   }
 }
-BENCHMARK(BM_std_sort_int)->Unit(benchmark::kMillisecond);
-;
+BENCHMARK(BM_std_sort)->Unit(benchmark::kMillisecond)->MinTime(2);
 
 //
 //
 //
-static void BM_ska_sort_int(benchmark::State& state) {
+static void BM_ss_sort_serial(benchmark::State &state) {
   for (auto _ : state) {
     state.PauseTiming();
 
@@ -74,101 +73,64 @@ static void BM_ska_sort_int(benchmark::State& state) {
     state.ResumeTiming();
 
     // Sort
-    ska_sort(numbers.begin(), numbers.end());
+    merge_sort(numbers, "serial");
   }
 }
-BENCHMARK(BM_ska_sort_int)->Unit(benchmark::kMillisecond);
-;
+BENCHMARK(BM_ss_sort_serial)->Unit(benchmark::kMillisecond)->MinTime(2);
 
 //
 //
 //
-static void BM_std_sort_double(benchmark::State& state) {
+static void BM_ss_sort_taskgroup(benchmark::State &state) {
   for (auto _ : state) {
     state.PauseTiming();
 
     // Generate random vector
-    std::vector<double> numbers(N_ELEMENTS);
+    std::vector<int> numbers(N_ELEMENTS);
     std::ranges::generate(numbers, randomNumberBetween(1, 100));
     state.ResumeTiming();
 
     // Sort
-    std::ranges::sort(numbers.begin(), numbers.end());
+    merge_sort(numbers, "taskgroup");
   }
 }
-BENCHMARK(BM_std_sort_double)->Unit(benchmark::kMillisecond);
-;
+BENCHMARK(BM_ss_sort_taskgroup)->Unit(benchmark::kMillisecond)->MinTime(2);
 
 //
 //
 //
-static void BM_ska_sort_double(benchmark::State& state) {
+static void BM_ss_sort_untied(benchmark::State &state) {
   for (auto _ : state) {
     state.PauseTiming();
 
     // Generate random vector
-    std::vector<double> numbers(N_ELEMENTS);
+    std::vector<int> numbers(N_ELEMENTS);
     std::ranges::generate(numbers, randomNumberBetween(1, 100));
     state.ResumeTiming();
 
     // Sort
-    ska_sort(numbers.begin(), numbers.end());
+    merge_sort(numbers, "untied");
   }
 }
-BENCHMARK(BM_ska_sort_double)->Unit(benchmark::kMillisecond);
-;
+BENCHMARK(BM_ss_sort_untied)->Unit(benchmark::kMillisecond)->MinTime(2);
 
 //
 //
 //
-static void BM_std_sort_argsort(benchmark::State& state) {
+static void BM_ss_sort_taskyield(benchmark::State &state) {
   for (auto _ : state) {
     state.PauseTiming();
 
     // Generate random vector
-    std::vector<double> numbers(N_ELEMENTS);
+    std::vector<int> numbers(N_ELEMENTS);
     std::ranges::generate(numbers, randomNumberBetween(1, 100));
-
-    std::vector<valuePair> pairs_full(numbers.size());
-#pragma omp parallel for
-    for (size_t i = 0; i < pairs_full.size(); i++) {
-      pairs_full[i] = valuePair(i, abs(numbers[i]));
-    }
-
     state.ResumeTiming();
+
     // Sort
-    std::ranges::sort(
-        pairs_full.begin(), pairs_full.end(),
-        [](const valuePair& left, const valuePair& right) -> bool {
-          return left.value > right.value;
-        });
+    merge_sort(numbers, "taskyield");
   }
 }
-BENCHMARK(BM_std_sort_argsort)->Unit(benchmark::kMillisecond)->MinTime(5);
-
-//
-//
-//
-static void BM_ska_sort_argsort(benchmark::State& state) {
-  for (auto _ : state) {
-    state.PauseTiming();
-    // Generate random vector
-    std::vector<double> numbers(N_ELEMENTS);
-    std::ranges::generate(numbers, randomNumberBetween(1, 100));
-
-    std::vector<valuePair> pairs_full(numbers.size());
-#pragma omp parallel for
-    for (size_t i = 0; i < pairs_full.size(); i++) {
-      pairs_full[i] = valuePair(i, abs(numbers[i]));
-    }
-
-    state.ResumeTiming();
-    // Sort
-    ska_sort(pairs_full.begin(), pairs_full.end(),
-             [](auto&& a) -> decltype(auto) { return a.value; });
-  }
-}
-BENCHMARK(BM_ska_sort_argsort)->Unit(benchmark::kMillisecond)->MinTime(5);
+BENCHMARK(BM_ss_sort_taskyield)->Unit(benchmark::kMillisecond)->MinTime(2);
 
 //
 // Main
