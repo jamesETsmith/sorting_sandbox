@@ -41,20 +41,6 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 enable_testing()
 add_subdirectory(src/test)
 
-#
-# Adding benchmarks
-#
-
-# Make sure CMake see benchmark
-
-# add_subdirectory(${CMAKE_SOURCE_DIR}/external/googletest)
-# add_subdirectory(${CMAKE_SOURCE_DIR}/external/benchmark)
-
-
-# Add configure our benchmarks
-# add_subdirectory(${CMAKE_SOURCE_DIR}/benchmarking)
-
-
 
 #
 # Adding Profiling Kernels

@@ -14,7 +14,7 @@ void prof_mergesort(const std::string method, const uint64_t n_elements,
     // SETUP
     std::vector<std::pair<size_t, double>> number_pairs(n_elements);
     auto _f = randomNumberBetween(-5, 5);
-#pragma omp parallel for simd
+#pragma omp parallel for simd schedule(static, 16)
     for (int i = 0; i < n_elements; i++) {
       number_pairs[i] = std::make_pair(i, _f());
     }

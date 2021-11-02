@@ -106,6 +106,8 @@ TEST_CASE("Test MergeSort argsort default") {
   const int n_elements = 100000;
   std::vector<std::pair<double, size_t>> s_std(n_elements);
   auto _f = randomNumberBetween(0, 2.);
+
+#pragma omp parallel for schedule(static, 16)
   for (int i = 0; i < n_elements; i++) {
     s_std[i] = std::make_pair(_f(), i);
   }
