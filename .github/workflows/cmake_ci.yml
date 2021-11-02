@@ -29,4 +29,4 @@ jobs:
 
     - name: Test with CMake/CTest
       run: |
-        cmake --build ${{github.workspace}}/build --target test --verbose
+        ctest --build-and-test . build --build-generator "Unix Makefiles"  --build-noclean --rerun-failed --output-on-failure
