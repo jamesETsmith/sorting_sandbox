@@ -29,4 +29,4 @@ jobs:
 
     - name: Test with CMake/CTest
       run: |
-        cmake --build ${{github.workspace}}/build --target test --rerun-failed --output-on-failure
+        cmake --build ${{github.workspace}}/build --target test --verbose
