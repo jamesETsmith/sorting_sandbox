@@ -14,14 +14,16 @@ elif [ "${COMPILER}" = "clang++-11" ]
 then
     echo "Using LLVM script to install clang++11"
     VERSION=11
-    sudo apt-get install clang-${VERSION} libclang-common-${VERSION}-dev libclang-${VERSION}-dev\
-        libc++-${VERSION}-dev libomp-${VERSION}-dev
+    sudo apt-get install clang-${VERSION} libclang-common-${VERSION}-dev\
+        libclang-${VERSION}-dev libclang1-${VERSION} libc++-${VERSION}-dev\
+        libomp-${VERSION}-dev
 elif [ "${COMPILER}" = "clang++-13" ]
 then
     echo "Using LLVM script to install clang++-13"
     VERSION=13
-    sudo apt-get install clang-${VERSION} libclang-common-${VERSION}-dev libclang-${VERSION}-dev\
-        libc++-${VERSION}-dev libomp-${VERSION}-dev
+    sudo apt-get install clang-${VERSION} libclang-common-${VERSION}-dev\
+        libclang-${VERSION}-dev libclang1-${VERSION} libc++-${VERSION}-dev\
+        libomp-${VERSION}-dev
 elif [ "${COMPILER}" = "g++-10" ]
 then
     echo "Nothing to install!"
