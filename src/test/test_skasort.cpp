@@ -12,11 +12,11 @@ TEST_CASE("Test Ska Sort Int") {
   std::vector<int> s_ska = s_std;
 
   // Sorting
-  std::ranges::sort(s_std);
+  std::sort(s_std.begin(), s_std.end());
   ska_sort(s_ska.begin(), s_ska.end());
 
   // Checking
-  bool matching = std::ranges::equal(s_std, s_ska);
+  bool matching = std::equal(s_std.begin(), s_std.end(), s_ska.begin());
   CHECK(matching);
 }
 
@@ -28,10 +28,10 @@ TEST_CASE("Test Ska Sort Double") {
   std::vector<double> s_ska = s_std;
 
   // Sorting
-  std::ranges::sort(s_std);
+  std::sort(s_std.begin(), s_std.end());
   ska_sort(s_ska.begin(), s_ska.end());
 
   // Checking
-  bool matching = std::ranges::equal(s_std, s_ska);
+  bool matching = std::equal(s_std.begin(), s_std.end(), s_ska.begin());
   CHECK(matching);
 }

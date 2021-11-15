@@ -9,66 +9,66 @@
 
 TEST_CASE("Test MergeSort Int") {
   std::vector<int> s_std(100000);
-  std::ranges::generate(s_std, randomNumberBetween(-100., 100.));
-  std::ranges::sort(s_std);
+  std::generate(s_std.begin(), s_std.end(), randomNumberBetween(-100., 100.));
+  std::sort(s_std.begin(), s_std.end());
   auto s_ss = s_std;
 
   merge_sort<int>(s_ss, "serial");
 
   // Checking
-  bool matching = std::ranges::equal(s_std, s_ss);
+  bool matching = std::equal(s_std.begin(), s_std.end(), s_ss.begin());
   CHECK(matching);
 }
 
 TEST_CASE("Test MergeSort Serial") {
   std::vector<double> s_std(100000);
-  std::ranges::generate(s_std, randomNumberBetween(-1., 1.));
-  std::ranges::sort(s_std);
+  std::generate(s_std.begin(), s_std.end(), randomNumberBetween(-1., 1.));
+  std::sort(s_std.begin(), s_std.end());
   auto s_ss = s_std;
 
   merge_sort<double>(s_ss, "serial");
 
   // Checking
-  bool matching = std::ranges::equal(s_std, s_ss);
+  bool matching = std::equal(s_std.begin(), s_std.end(), s_ss.begin());
   CHECK(matching);
 }
 
 TEST_CASE("Test MergeSort taskgroup") {
   std::vector<double> s_std(100000);
-  std::ranges::generate(s_std, randomNumberBetween(-1., 1.));
-  std::ranges::sort(s_std);
+  std::generate(s_std.begin(), s_std.end(), randomNumberBetween(-1., 1.));
+  std::sort(s_std.begin(), s_std.end());
   auto s_ss = s_std;
 
   merge_sort<double>(s_ss, "taskgroup");
 
   // Checking
-  bool matching = std::ranges::equal(s_std, s_ss);
+  bool matching = std::equal(s_std.begin(), s_std.end(), s_ss.begin());
   CHECK(matching);
 }
 
 TEST_CASE("Test MergeSort untied") {
   std::vector<double> s_std(100000);
-  std::ranges::generate(s_std, randomNumberBetween(-1., 1.));
-  std::ranges::sort(s_std);
+  std::generate(s_std.begin(), s_std.end(), randomNumberBetween(-1., 1.));
+  std::sort(s_std.begin(), s_std.end());
   auto s_ss = s_std;
 
   merge_sort<double>(s_ss, "untied");
 
   // Checking
-  bool matching = std::ranges::equal(s_std, s_ss);
+  bool matching = std::equal(s_std.begin(), s_std.end(), s_ss.begin());
   CHECK(matching);
 }
 
 TEST_CASE("Test MergeSort taskyield") {
   std::vector<double> s_std(100000);
-  std::ranges::generate(s_std, randomNumberBetween(-1., 1.));
-  std::ranges::sort(s_std);
+  std::generate(s_std.begin(), s_std.end(), randomNumberBetween(-1., 1.));
+  std::sort(s_std.begin(), s_std.end());
   auto s_ss = s_std;
 
   merge_sort<double>(s_ss, "taskyield");
 
   // Checking
-  bool matching = std::ranges::equal(s_std, s_ss);
+  bool matching = std::equal(s_std.begin(), s_std.end(), s_ss.begin());
   CHECK(matching);
 }
 
@@ -82,7 +82,7 @@ TEST_CASE("Test MergeSort argsort") {
   }
 
   std::vector<std::pair<size_t, double>> s_ss = s_std;
-  std::ranges::sort(s_std, [](const auto &left, const auto &right) {
+  std::sort(s_std.begin(), s_std.end(), [](const auto &left, const auto &right) {
     return abs(left.second) > abs(right.second);
   });
 
@@ -97,7 +97,7 @@ TEST_CASE("Test MergeSort argsort") {
   }
 
   // Checking
-  bool matching = std::ranges::equal(s_std, s_ss);
+  bool matching = std::equal(s_std.begin(), s_std.end(), s_ss.begin());
   CHECK(matching);
 }
 
@@ -113,7 +113,7 @@ TEST_CASE("Test MergeSort argsort default") {
   }
 
   std::vector<std::pair<double, size_t>> s_ss = s_std;
-  std::ranges::sort(s_std);
+  std::sort(s_std.begin(), s_std.end());
 
   // Sorting
   merge_sort(std::span{s_ss}, "taskyield");
@@ -124,6 +124,6 @@ TEST_CASE("Test MergeSort argsort default") {
   }
 
   // Checking
-  bool matching = std::ranges::equal(s_std, s_ss);
+  bool matching = std::equal(s_std.begin(), s_std.end(), s_ss.begin());
   CHECK(matching);
 }

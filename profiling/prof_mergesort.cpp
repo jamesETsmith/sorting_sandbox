@@ -13,7 +13,7 @@ void prof_mergesort(std::string method, uint64_t n_elements,
 
     // SETUP
     std::vector<int> numbers(n_elements);
-    std::ranges::generate(numbers, randomNumberBetween(1., 5.));
+    std::generate(numbers.begin(), numbers.end(), randomNumberBetween(1., 5.));
 
     // prof
     auto _t0 = std::chrono::steady_clock::now();
