@@ -9,6 +9,8 @@ install_llvm () {
     # Fingerprint: 6084 F3CF 814B 57C1 CF12 EFD5 15CF 4D18 AF4F 7421
 
     VERSION=$1
+    # From: https://llvm.discourse.group/t/installing-llvm-releases-via-apt-get-unable-to-locate-package/2776/2
+    sudo apt-add-repository "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-${VERSION} main"
 
     sudo apt-get install libllvm-${VERSION}-ocaml-dev libllvm${VERSION} llvm-${VERSION} llvm-${VERSION}-dev llvm-${VERSION}-doc llvm-${VERSION}-examples llvm-${VERSION}-runtime
     sudo apt-get install clang-${VERSION} clang-tools-${VERSION} clang-${VERSION}-doc libclang-common-${VERSION}-dev libclang-${VERSION}-dev libclang1-${VERSION} clang-format-${VERSION} python-clang-${VERSION} clangd-${VERSION}
