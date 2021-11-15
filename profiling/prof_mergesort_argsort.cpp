@@ -22,7 +22,7 @@ void prof_mergesort(const std::string method, const uint64_t n_elements,
     // prof
     auto _t0 = std::chrono::steady_clock::now();
 
-    merge_sort(number_pairs, method, [](const auto &left, const auto &right) {
+    merge_sort<std::pair<size_t, double>>(number_pairs, method, [](const auto &left, const auto &right) {
       return abs(left.second) > abs(right.second);
     });
 

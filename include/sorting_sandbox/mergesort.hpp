@@ -3,9 +3,10 @@
 #include <stdlib.h>
 #include <string>
 #include <vector>
+#include <span>
 
 template <typename T, class _Compare>
-void _mergesort_recursive_serial(std::vector<T> &x, size_t left, size_t right,
+void _mergesort_recursive_serial(std::span<T> &x, size_t left, size_t right,
                                  _Compare __compare) {
   if (left < right) {
     if ((right - left) >= 32) {
@@ -21,7 +22,7 @@ void _mergesort_recursive_serial(std::vector<T> &x, size_t left, size_t right,
 }
 
 template <typename T, class _Compare>
-void _mergesort_recursive_taskgroup(std::vector<T> &x, size_t left,
+void _mergesort_recursive_taskgroup(std::span<T> &x, size_t left,
                                     size_t right, _Compare __compare) {
   if (left < right) {
     if ((right - left) >= 32) {
@@ -42,7 +43,7 @@ void _mergesort_recursive_taskgroup(std::vector<T> &x, size_t left,
 }
 
 template <typename T, class _Compare>
-void _mergesort_recursive_untied(std::vector<T> &x, size_t left, size_t right,
+void _mergesort_recursive_untied(std::span<T> &x, size_t left, size_t right,
                                  _Compare __compare) {
   if (left < right) {
     if ((right - left) >= 32) {
@@ -63,7 +64,7 @@ void _mergesort_recursive_untied(std::vector<T> &x, size_t left, size_t right,
 }
 
 template <typename T, class _Compare>
-void _mergesort_recursive_taskyield(std::vector<T> &x, size_t left,
+void _mergesort_recursive_taskyield(std::span<T> x, size_t left,
                                     size_t right, _Compare __compare) {
   if (left < right) {
     if ((right - left) >= 32) {
@@ -86,7 +87,7 @@ void _mergesort_recursive_taskyield(std::vector<T> &x, size_t left,
 }
 
 template <typename T, class _Compare = std::less<T>>
-void merge_sort(std::vector<T> &x, std::string method,
+void merge_sort(std::span<T> x, std::string method,
                 _Compare __compare = _Compare()) {
 
   if (method.compare("taskgroup") == 0) {

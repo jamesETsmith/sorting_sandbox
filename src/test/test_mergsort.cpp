@@ -13,7 +13,7 @@ TEST_CASE("Test MergeSort Int") {
   std::ranges::sort(s_std);
   auto s_ss = s_std;
 
-  merge_sort(s_ss, "serial");
+  merge_sort<int>(s_ss, "serial");
 
   // Checking
   bool matching = std::ranges::equal(s_std, s_ss);
@@ -26,7 +26,7 @@ TEST_CASE("Test MergeSort Serial") {
   std::ranges::sort(s_std);
   auto s_ss = s_std;
 
-  merge_sort(s_ss, "serial");
+  merge_sort<double>(s_ss, "serial");
 
   // Checking
   bool matching = std::ranges::equal(s_std, s_ss);
@@ -39,7 +39,7 @@ TEST_CASE("Test MergeSort taskgroup") {
   std::ranges::sort(s_std);
   auto s_ss = s_std;
 
-  merge_sort(s_ss, "taskgroup");
+  merge_sort<double>(s_ss, "taskgroup");
 
   // Checking
   bool matching = std::ranges::equal(s_std, s_ss);
@@ -52,7 +52,7 @@ TEST_CASE("Test MergeSort untied") {
   std::ranges::sort(s_std);
   auto s_ss = s_std;
 
-  merge_sort(s_ss, "untied");
+  merge_sort<double>(s_ss, "untied");
 
   // Checking
   bool matching = std::ranges::equal(s_std, s_ss);
@@ -65,7 +65,7 @@ TEST_CASE("Test MergeSort taskyield") {
   std::ranges::sort(s_std);
   auto s_ss = s_std;
 
-  merge_sort(s_ss, "taskyield");
+  merge_sort<double>(s_ss, "taskyield");
 
   // Checking
   bool matching = std::ranges::equal(s_std, s_ss);
@@ -87,7 +87,7 @@ TEST_CASE("Test MergeSort argsort") {
   });
 
   // Sorting
-  merge_sort(s_ss, "taskyield", [](const auto &left, const auto &right) {
+  merge_sort<std::pair<size_t, double>>(s_ss, "taskyield", [](const auto &left, const auto &right) {
     return abs(left.second) > abs(right.second);
   });
 
@@ -116,7 +116,7 @@ TEST_CASE("Test MergeSort argsort default") {
   std::ranges::sort(s_std);
 
   // Sorting
-  merge_sort(s_ss, "taskyield");
+  merge_sort(std::span{s_ss}, "taskyield");
 
   for (int i = 0; i < 10; i++) {
     std::cout << i << " " << s_ss[i].first << " " << s_std[i].first

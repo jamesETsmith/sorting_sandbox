@@ -18,7 +18,7 @@ void prof_mergesort(std::string method, uint64_t n_elements,
     // prof
     auto _t0 = std::chrono::steady_clock::now();
 
-    merge_sort(numbers, method);
+    merge_sort(std::span{numbers}, method);
     double t_sort =
         std::chrono::duration<double>(std::chrono::steady_clock::now() - _t0)
             .count();

@@ -15,8 +15,12 @@ else()
     message(STATUS "Using the compiler optimizations for march=${ARCH}")
 endif()
 
-# set(CMAKE_CXX_FLAGS "-O3 -g -march=${ARCH} -Wno-narrowing -stdlib=libc++")
 set(CMAKE_CXX_FLAGS "-O3 -g -march=${ARCH} -Wno-narrowing")
+
+# User libc++ with Clang
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
+endif()
 
 
 #
