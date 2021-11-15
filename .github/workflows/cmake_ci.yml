@@ -14,10 +14,14 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         compiler: [g++-10, g++11, clang++-10, clang++-11]
+
     steps:
     - uses: actions/checkout@v2
       with:
         submodules: recursive
+
+    - name: Install compilers
+      run: ${{github.workspace}}/.github/helpers/install_comiler.sh ${{ matrix.compiler }}
 
     - name: Configure CMake
       env:
