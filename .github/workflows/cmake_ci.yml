@@ -21,7 +21,7 @@ jobs:
         submodules: recursive
 
     - name: Install compilers
-      run: ${{github.workspace}}/.github/helpers/install_comiler.sh ${{ matrix.compiler }}
+      run: ${{github.workspace}}/.github/helpers/install_compiler.sh ${{ matrix.compiler }}
 
     - name: Configure CMake
       env:
