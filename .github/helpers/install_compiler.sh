@@ -27,14 +27,14 @@ install_llvm () {
 if [ "${COMPILER}" = "clang++-10" ]
 then
     echo "Nothing to install!"
-elif [ "${COMPILER}" = "clang++-11" ]
-then
-    echo "Using LLVM script to install clang++11"
-    install_llvm "11"
-elif [ "${COMPILER}" = "clang++-13" ]
-then
-    echo "Using LLVM script to install clang++-13"
-    install_llvm "13"
+# elif [ "${COMPILER}" = "clang++-12" ]
+# then
+#     echo "Using LLVM script to install clang++12"
+#     install_llvm "12"
+# elif [ "${COMPILER}" = "clang++-13" ]
+# then
+#     echo "Using LLVM script to install clang++-13"
+#     install_llvm "13"
 elif [ "${COMPILER}" = "g++-10" ]
 then
     echo "Nothing to install!"
